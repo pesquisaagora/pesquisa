@@ -4079,8 +4079,8 @@ src="https://www.facebook.com/tr?id=996784629034052&ev=PageView&noscript=1"
 							data-id="706ee0d9" data-element_type="widget" data-widget_type="heading.default">
 							<div class="elementor-widget-container">
 								<h2 class="elementor-heading-title elementor-size-default"><span
-										class="sacar-text"><span class="sacar-text"><span class="sacar-text"><span
-													class="sacar-text">SACAR</span></span></span></span></h2>
+										class="-text"><span class="-text"><span class="-text"><span
+													class="-text"></span></span></span></span></h2>
 							</div>
 						</div>
 					</div>
@@ -4302,60 +4302,17 @@ src="https://www.facebook.com/tr?id=996784629034052&ev=PageView&noscript=1"
 							margin: 0;
 						}
 
-						/* Estilo para tornar o texto "SACAR" clicável */
-						.sacar-text {
+						/* Estilo para tornar o texto "" clicável */
+						.-text {
 							cursor: pointer;
 							color: #FFFFFF;
 							transition: color 0.3s ease;
 						}
 
-						.sacar-text:hover {
+						.-text:hover {
 							color: #FFFFFF;
 						}
 					</style>
-
-					<script>
-						document.addEventListener('DOMContentLoaded', function () {
-							// Encontrar todos os elementos de texto que contenham "SACAR"
-							const textNodes = [];
-							function findTextNodes(element) {
-								if (element.nodeType === Node.TEXT_NODE) {
-									if (element.nodeValue.trim() === "SACAR") {
-										textNodes.push(element);
-									}
-								} else {
-									for (let i = 0; i < element.childNodes.length; i++) {
-										findTextNodes(element.childNodes[i]);
-									}
-								}
-							}
-							findTextNodes(document.body);
-
-							// Adicionar a classe e o evento de clique a cada elemento "SACAR" encontrado
-							textNodes.forEach(node => {
-								const span = document.createElement('span');
-								span.textContent = node.nodeValue;
-								span.className = 'sacar-text';
-								span.onclick = showSaquePopup;
-								node.parentNode.replaceChild(span, node);
-							});
-						});
-
-						function showSaquePopup() {
-							const popup = document.getElementById('saque-popup');
-							if (!popup) {
-								console.error('Popup element not found');
-								return;
-							}
-
-							popup.style.display = 'flex';
-
-							// Fechar o popup após 2.5 segundos
-							setTimeout(() => {
-								popup.style.display = 'none';
-							}, 2500);
-						}
-					</script>
 				</div>
 			</div>
 			<div class="elementor-element elementor-element-3d9a5202 elementor-widget elementor-widget-html"
